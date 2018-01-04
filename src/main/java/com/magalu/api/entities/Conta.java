@@ -14,18 +14,18 @@ import javax.persistence.Table;
 import com.magalu.api.enums.PerfilEnum;
 
 @Entity
-@Table(name = "pessoa")
-public class Pessoa implements Serializable {
-
-	private static final long serialVersionUID = -5754246207015712518L;
-
+@Table(name = "conta")
+public class Conta implements Serializable {
+ 
+	private static final long serialVersionUID = 2520616895303372379L;
+	
 	private Long id;
 	private String nome;
 	private String email;
 	private String senha;
 	private PerfilEnum perfil;
 
-	public Pessoa() {
+	public Conta() {
 	}
 
 	@Id
@@ -73,5 +73,11 @@ public class Pessoa implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	@Override
+	public String toString() {
+		return "Conta [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", perfil=" + perfil
+				+ "]";
 	}
 }

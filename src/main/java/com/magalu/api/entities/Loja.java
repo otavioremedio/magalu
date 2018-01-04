@@ -56,7 +56,12 @@ public class Loja implements Serializable {
 	}
 
 	public void setCep(String cep) {
-		cep = cep;
+		this.cep = cep;
+	}
+
+	@Override
+	public String toString() {
+		return "Loja [id=" + id + ", descricao=" + descricao + ", codigo=" + codigo + ", cep=" + cep + "]";
 	}
 
 }
