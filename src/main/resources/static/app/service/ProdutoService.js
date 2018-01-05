@@ -1,13 +1,13 @@
 ;(function() {	
 	angular
         .module('app')
-        .service('LojaService', ['$http', function($http) {
+        .service('ProdutoService', ['$http', function($http) {
 
             return {
                 save: function(data) {
             		return $http({
                 		method: 'POST',
-                		url   : '/api/loja',
+                		url   : '/api/produto',
                 		data  : data,
                 		withCredentials : true,
                         headers : {Authorization : 'Bearer ' + localStorage.getItem('token')}

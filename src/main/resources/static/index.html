@@ -22,10 +22,11 @@
             </button>
             <a class="navbar-brand" href="#">Magalu Finder</a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
+        <div id="navbar" class="collapse navbar-collapse" ng-controller="headController">
             <ul class="nav navbar-nav">
-                <li><a href="#!/lojas/nova">Nova Loja</a></li>
-                <li><a href="#!/lojas">Listagem de Lojas</a></li>
+                <li ng-show="isLogged() && isAdmin()"><a href="#!/loja">Nova Loja</a></li>
+                <li ng-show="isLogged() && isAdmin()"><a href="#!/lojas">Listagem de Lojas</a></li>
+                <li ng-show="isLogged() && isAdmin()"><a href="#!/produto">Novo Produto</a></li>
             </ul>
         </div>
     </div>
@@ -43,9 +44,13 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.2/sweetalert.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-sweetalert/1.1.2/SweetAlert.min.js"></script>
 <script type="text/javascript" src="app/app.js"></script>
-<script type="text/javascript" src="app/controller/AdicionarLojaController.js"></script>
+<script type="text/javascript" src="app/controller/LojaController.js"></script>
+<script type="text/javascript" src="app/controller/AuthController.js"></script>
 <script type="text/javascript" src="app/controller/ListagemLojasController.js"></script>
+<script type="text/javascript" src="app/controller/ProdutoController.js"></script>
 <script type="text/javascript" src="app/service/LojaService.js"></script>
+<script type="text/javascript" src="app/service/AuthService.js"></script>
+<script type="text/javascript" src="app/service/ProdutoService.js"></script>
 <script type="text/javascript" src="components/directives/ListaDeLojasDirective.js"></script>
 </body>
 </html>

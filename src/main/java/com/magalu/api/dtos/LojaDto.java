@@ -1,5 +1,10 @@
 package com.magalu.api.dtos;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class LojaDto {
 
 	private Long id;
@@ -18,6 +23,8 @@ public class LojaDto {
 		this.id = id;
 	}
 
+	@NotEmpty(message = "Código não pode ser vazio.")
+	@Length(min = 3, max = 10, message = "Código deve conter entre 3 e 10 caracteres.")
 	public String getCodigo() {
 		return codigo;
 	}
@@ -26,6 +33,8 @@ public class LojaDto {
 		this.codigo = codigo;
 	}
 
+	@NotEmpty(message = "Descrição não pode ser vazia.")
+	@Length(min = 3, max = 150, message = "Descrição deve conter entre 3 e 150 caracteres.")
 	public String getDescricao() {
 		return descricao;
 	}
@@ -34,6 +43,9 @@ public class LojaDto {
 		this.descricao = descricao;
 	}
 
+	@NotEmpty(message = "CEP não pode ser vazio.")
+	@Length(min = 8, max = 8, message = "CEP deve conter 8 caracteres.")
+	@Pattern(regexp = "[0-9]+", message="CEP deve ter apenas números")
 	public String getCep() {
 		return cep;
 	}

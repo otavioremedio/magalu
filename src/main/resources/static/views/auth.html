@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Adicionar Loja</title>
+    <title>Login</title>
 </head>
 <body>
-    <h3>Adicionar Loja</h3>
+    <h3>Login</h3>
     <hr />
 
-    <form ng-submit="vm.salvarLoja()">
+    <form ng-submit="vm.login()">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -19,17 +19,13 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Descrição</td> 
-                    <td><input ng-model="vm.loja.descricao" type="text" required /></td> 
+                    <td>Email</td> 
+                    <td><input ng-model="vm.usuario.email" type="email" required /></td> 
                 </tr>
                 <tr>
-                    <td>Código</td> 
-                    <td><input ng-model="vm.loja.codigo" type="text" required /></td> 
-                </tr>
-                <tr>
-                    <td>CEP</td> 
-                    <td><input ng-model="vm.loja.cep" type="text" required /></td> 
-                </tr>
+                    <td>Senha</td> 
+                    <td><input ng-model="vm.usuario.senha" type="password" required /></td> 
+                </tr>                
             </tbody>
         </table>
 

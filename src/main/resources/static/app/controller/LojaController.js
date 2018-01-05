@@ -1,7 +1,7 @@
 ;(function() {
     angular
         .module('app')
-        .controller('AdicionarLojaController', ['$uibModal', 'SweetAlert', 'LojaService', function($uibModal, SweetAlert, LojaService) {
+        .controller('LojaController', ['$uibModal', 'SweetAlert', 'LojaService', function($uibModal, SweetAlert, LojaService) {
             var vm = this;
 
             function init() {  
@@ -23,12 +23,13 @@
                        ariaDescribedBy: 'modal-body',
                        templateUrl: 'components/modals/sucessoAoAdicionarLoja.html',
                        controllerAs: 'vm',
-                       controller: function() {
-                           var vm = this;
-                           vm.loja = response.data;
-                           return vm;
-                       }
+                       controller: ['$scope', function($scope) {                         
+                    	   $scope.$on('modal.closing', function(event, reason, closed){                    		   
+                    		   window.location = '/';   
+                    	   })                           
+                       }]                       
                    });
+                    
                 }, function(response) {
                     SweetAlert.swal({
                         title: 'Erro ao criar nova loja',

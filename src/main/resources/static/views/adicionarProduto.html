@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Adicionar Loja</title>
+    <title>Adicionar Produto</title>
 </head>
 <body>
-    <h3>Adicionar Loja</h3>
+    <h3>Adicionar Produto</h3>
     <hr />
 
-    <form ng-submit="vm.salvarLoja()">
+    <form ng-submit="vm.salvarProduto()">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -20,15 +20,15 @@
             <tbody>
                 <tr>
                     <td>Descrição</td> 
-                    <td><input ng-model="vm.loja.descricao" type="text" required /></td> 
+                    <td><input ng-model="vm.produto.codigo" type="text" required /></td> 
                 </tr>
                 <tr>
                     <td>Código</td> 
-                    <td><input ng-model="vm.loja.codigo" type="text" required /></td> 
+                    <td><input ng-model="vm.produto.descricao" type="text" required /></td> 
                 </tr>
                 <tr>
                     <td>CEP</td> 
-                    <td><input ng-model="vm.loja.cep" type="text" required /></td> 
+                    <td><input ng-model="vm.produto.valor" ng-pattern="/^[0-9]+(\,[0-9]{1,2})?$/" step="0.01" type="number" required /></td> 
                 </tr>
             </tbody>
         </table>

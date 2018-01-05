@@ -73,7 +73,7 @@ public class LojaController {
 	 */
 	private void validarDadosExistentes(LojaDto lojaDto, BindingResult result) {
 		this.lojaService.buscaPorCodigo(lojaDto.getCodigo())
-			.ifPresent(func -> result.addError(new ObjectError("loja", "Já existe uma loja com esse código.")));
+			.ifPresent(loja -> result.addError(new ObjectError("loja", "Já existe uma loja com esse código.")));
 
 	}
 
@@ -88,8 +88,9 @@ public class LojaController {
 	private Loja converterDtoParaLoja(LojaDto lojaDto, BindingResult result)
 			throws NoSuchAlgorithmException {
 		Loja loja = new Loja();
-
-		//setar do dto para o objeto
+		loja.setDescricao(lojaDto.getDescricao());
+		loja.setCodigo(lojaDto.getCodigo());
+		loja.setCep(lojaDto.getCep());
 		return loja;
 	}
 
@@ -99,12 +100,11 @@ public class LojaController {
 	 * @param loja
 	 * @return LojaDto
 	 */
-	private LojaDto converterLojaDto(Loja funcionario) {
+	private LojaDto converterLojaDto(Loja loja) {
 		LojaDto lojaDto = new LojaDto();
-
-
-		//setear dto com dados do objeto
-
+		lojaDto.setDescricao(loja.getDescricao());
+		lojaDto.setCodigo(loja.getCodigo());
+		lojaDto.setCep(loja.getCep());
 		return lojaDto;
 	}
 }

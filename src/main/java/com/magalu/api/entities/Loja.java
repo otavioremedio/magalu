@@ -25,6 +25,7 @@ public class Loja implements Serializable {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="loja_id")
 	public Long getId() {
 		return id;
 	}
@@ -33,7 +34,7 @@ public class Loja implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "razao_social", nullable = false)
+	@Column(name = "descricao", nullable = false)
 	public String getDescricao() {
 		return descricao;
 	}
@@ -42,7 +43,7 @@ public class Loja implements Serializable {
 		this.descricao = razaoSocial;
 	}
 
-	@Column(name = "cnpj", nullable = false)
+	@Column(name = "codigo", nullable = false)
 	public String getCodigo() {
 		return codigo;
 	}
@@ -51,6 +52,7 @@ public class Loja implements Serializable {
 		this.codigo = cnpj;
 	}
 
+	@Column(name = "cep", nullable = false)
 	public String getCep() {
 		return cep;
 	}
