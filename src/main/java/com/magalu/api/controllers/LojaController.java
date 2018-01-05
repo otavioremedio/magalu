@@ -33,11 +33,11 @@ public class LojaController {
 	private LojaService lojaService;
 
 	public LojaController() {
-	}	
-	
+	}
+
 	/**
 	 * Cadastra uma loja no sistema
-	 * 
+	 *
 	 * @param lojaDto
 	 * @param result
 	 * @return ResponseEntity<Response<LojaDto>>
@@ -58,28 +58,28 @@ public class LojaController {
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
-		
+
 		this.lojaService.persistir(loja);
 
 		response.setData(this.converterLojaDto(loja));
 		return ResponseEntity.ok(response);
 	}
-	
+
 	/**
 	 * Verifica se a loja está cadastrada.
-	 * 
+	 *
 	 * @param lojaDto
 	 * @param result
 	 */
 	private void validarDadosExistentes(LojaDto lojaDto, BindingResult result) {
 		this.lojaService.buscaPorCodigo(lojaDto.getCodigo())
 			.ifPresent(func -> result.addError(new ObjectError("loja", "Já existe uma loja com esse código.")));
-		
+
 	}
-	
+
 	/**
 	 * Converte os dados do DTO para loja.
-	 * 
+	 *
 	 * @param lojaDto
 	 * @param result
 	 * @return Loja
@@ -88,20 +88,20 @@ public class LojaController {
 	private Loja converterDtoParaLoja(LojaDto lojaDto, BindingResult result)
 			throws NoSuchAlgorithmException {
 		Loja loja = new Loja();
-		
+
 		//setar do dto para o objeto
 		return loja;
 	}
-	
+
 	/**
 	 * Popula o DTO de cadastro com os dados da loja.
-	 * 
+	 *
 	 * @param loja
 	 * @return LojaDto
 	 */
 	private LojaDto converterLojaDto(Loja funcionario) {
 		LojaDto lojaDto = new LojaDto();
-		
+
 
 		//setear dto com dados do objeto
 
