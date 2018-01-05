@@ -17,18 +17,16 @@
             }
 
             function salvarLoja() {
-//                var data = vm.produtos.map(function(produto) {
-//                    return {produto:{
-//                        		gtin: produto.gtin
-//                        	},                      
-//                        	quantidade: produto.quantidade
-//                    };
-//                });
-//
-//                SweetAlert.swal({
-//                    title: "Carregando...",
-//                    showConfirmButton: false
-//                });
+                var data = vm.loja.map(function(produto) {
+                    return {descricao: loja.descricao,                      
+                        	codigo: loja.codigo
+                    };
+                });
+
+                SweetAlert.swal({
+                    title: "Carregando...",
+                    showConfirmButton: false
+                });
 //
 //                PedidoService.save(data).then(function(response) {
 //                    SweetAlert.close();
