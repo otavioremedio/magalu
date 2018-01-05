@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Loja</title>
+
+</head>
+<body>
+    <h3>Adicionar Loja</h3>
+    <hr />
+
+    <form ng-submit="vm.salvarLoja()">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Descrição</td> 
+                    <td><input ng-model="loja.descricao" type="text" min="0" required /></td> 
+                </tr>
+                <tr>
+                    <td>Código</td> 
+                    <td><input ng-model="loja.codigo" type="text" min="0" required /></td> 
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-primary pull-right">Enviar</button>
+    </form>
+</body>
+</html>
