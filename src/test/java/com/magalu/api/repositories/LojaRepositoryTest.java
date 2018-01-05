@@ -38,7 +38,7 @@ public class LojaRepositoryTest {
 	}
 
 	@Test
-	public void testBuscarPorCnpj() {
+	public void testBuscarPorCodigo() {
 		Loja loja = this.lojaRepository.findByCodigo(codigo);
 
 		assertEquals(codigo, loja.getCodigo());
