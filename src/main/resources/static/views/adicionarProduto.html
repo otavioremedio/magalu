@@ -19,19 +19,23 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Descrição</td> 
+                    <td>Código</td> 
                     <td><input ng-model="vm.produto.codigo" type="text" required /></td> 
                 </tr>
                 <tr>
-                    <td>Código</td> 
+                    <td>Descrição</td> 
                     <td><input ng-model="vm.produto.descricao" type="text" required /></td> 
                 </tr>
                 <tr>
-                    <td>CEP</td> 
-                    <td><input ng-model="vm.produto.valor" ng-pattern="/^[0-9]+(\,[0-9]{1,2})?$/" step="0.01" type="number" required /></td> 
-                </tr>
+                    <td>Valor</td> 
+                    <td><input ng-model="vm.produto.valor" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" type="number" required /></td> 
+                </tr>                
             </tbody>
         </table>
+        <div id="espaco"></div>
+        <h4>Lojas</h4>
+   		<hr />
+   		<lista-de-lojas></lista-de-lojas>
 
         <button type="submit" class="btn btn-primary pull-right">Enviar</button>
     </form>

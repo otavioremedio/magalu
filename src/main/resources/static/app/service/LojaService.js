@@ -4,7 +4,10 @@
         .service('LojaService', ['$http', function($http) {
 
             return {
-                save: function(data) {
+                find: function(codigo){
+                	return $http.get('api/loja/' + codigo);
+                },
+            	save: function(data) {
             		return $http({
                 		method: 'POST',
                 		url   : '/api/loja',

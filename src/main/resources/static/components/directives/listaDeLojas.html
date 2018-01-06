@@ -1,18 +1,22 @@
+<meta charset="UTF-8">
 <div>
     <div>
+    	<label>Código</label> 
+        <input type="text" ng-model="post.codigo"/><button type="button" ng-click="buscar(post.codigo)" class="btn btn-primary botao">Buscar</button>
         <table class="table table-striped">
             <thead>
-            <tr>
-                <th class="c1">Produto</th>
-                <th class="c2">Quantidade</th>
-                <th class="c2">Preco</th>
-                <th class="c2">Total</th>
-            </tr>
+	            <tr>
+	                <th class="c1">Código</th>
+	                <th class="c2">Descrição</th>
+	                <th></th>
+	            </tr>
             </thead>
             <tbody>
-<!--             <tr ng-repeat="loja in lojas"> -->
-<!--                 <td>{{loja.descricao}}</td> -->
-<!--             </tr> -->
+            <tr ng-repeat="loja in vm.produto.lojas">
+            	<td>{{loja.codigo}}</td>
+                <td>{{loja.descricao}}</td>
+                <td><button type="button" ng-click="remover(loja.codigo)" class="glyphicon glyphicon-remove"></button></td>
+            </tr>
             </tbody>
         </table>
     </div>

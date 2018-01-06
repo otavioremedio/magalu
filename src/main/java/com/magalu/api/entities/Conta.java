@@ -30,6 +30,7 @@ public class Conta implements Serializable {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "conta_id")
 	public Long getId() {
 		return id;
 	}

@@ -5,6 +5,7 @@
             var vm = this;
 
             function init() {  
+	              
             }
 
             function salvarLoja() {
@@ -31,9 +32,20 @@
                    });
                     
                 }, function(response) {
+                	var mensagem = '';
+                	
+                	if(response.data.mensagem != null){
+                		mensagem = response.data.mensagem 
+                	} else {
+                		response.data.errors.forEach(function(e, i){
+                			if(e != null){
+                				mensagem += e + '\n';
+                			}
+                		})
+                	}
                     SweetAlert.swal({
-                        title: 'Erro ao criar nova loja',
-                        text: response.data.mensagem,
+                        title: 'Erro ao criar loja',
+                        text: mensagem,
                         type: 'error'
                     });
                 });

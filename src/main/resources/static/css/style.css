@@ -1,9 +1,17 @@
 @CHARSET "UTF-8";
 
 .c1{
-	width: 60%;
+	width: 10%;
 }
 
 .c2{
-	width: 10%;
+	width: 50%;
+}
+
+.botao {
+	margin-left: 5px;
+}
+
+#espaco{
+	padding-bottom: 50px;
 }

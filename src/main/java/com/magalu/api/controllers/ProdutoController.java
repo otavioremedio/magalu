@@ -91,6 +91,7 @@ public class ProdutoController {
 		produto.setDescricao(produtoDto.getDescricao());
 		produto.setCodigo(produtoDto.getCodigo());
 		produto.setValor(produtoDto.getValor());
+		produto.setLojas(produtoDto.getLojas());
 		return produto;
 	}
 
@@ -105,6 +106,7 @@ public class ProdutoController {
 		produtoDto.setDescricao(produto.getDescricao());
 		produtoDto.setCodigo(produto.getCodigo());
 		produtoDto.setValor(produto.getValor());
+		produtoDto.setLojas(produto.getLojas());
 		return produtoDto;
 	}
 }

@@ -56,7 +56,6 @@ public class ProdutoDto {
 		this.descricao = descricao;
 	}
 
-	@NotEmpty(message = "Valor não pode ser vazio.")
 	@NumberFormat(style = Style.NUMBER, pattern = "######,##")
 	public BigDecimal getValor() {
 		return valor;
@@ -66,6 +65,7 @@ public class ProdutoDto {
 		this.valor = valor;
 	}
 
+	@NotEmpty(message = "Pelo menos uma loja deve ser se escolhida.")
 	public List<Loja> getLojas() {
 		return lojas;
 	}

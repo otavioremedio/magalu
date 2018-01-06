@@ -1,5 +1,6 @@
 package com.magalu.api.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.magalu.api.entities.Loja;
@@ -21,4 +22,5 @@ public interface LojaService {
 	 * @return Loja
 	 */	
 	Optional<Loja> buscaPorCodigo(String codigo);
+	
 }
