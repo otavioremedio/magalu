@@ -8,7 +8,7 @@
     <h3>Adicionar Loja</h3>
     <hr />
 
-    <form ng-submit="vm.salvarLoja()">
+    <form name="frmProduto" ng-submit="vm.salvarLoja()">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -28,8 +28,8 @@
                 </tr>
                 <tr>
                     <td>CEP</td> 
-                    <td><input ng-model="vm.loja.cep" type="text" required /></td> 
-                </tr>
+                    <td><input ng-model="vm.loja.cep" name="cep" type="text" required /></td>                    
+                </tr>                
             </tbody>
         </table>
 

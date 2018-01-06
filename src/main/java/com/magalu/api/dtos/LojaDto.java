@@ -44,8 +44,7 @@ public class LojaDto {
 	}
 
 	@NotEmpty(message = "CEP não pode ser vazio.")
-	@Length(min = 8, max = 8, message = "CEP deve conter 8 caracteres.")
-	@Pattern(regexp = "[0-9]+", message="CEP deve ter apenas números")
+	@Pattern(regexp = "^[0-9]{5}+[\\-]{1}+[0-9{3}]+$", message="CEP deve estar no formato 99999-999")
 	public String getCep() {
 		return cep;
 	}
