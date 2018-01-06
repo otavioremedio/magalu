@@ -2,6 +2,7 @@ package com.magalu.api.services;
 
 import java.util.Optional;
 
+import com.magalu.api.dtos.GoogleDto;
 import com.magalu.api.entities.Produto;
 
 public interface ProdutoService {
@@ -21,4 +22,12 @@ public interface ProdutoService {
 	 * @return Produto
 	 */	
 	Optional<Produto> buscaPorCodigo(String codigo);
+	
+	/**
+	 * Procura distancia por cep.
+	 * 
+	 * @param cepOrigem e cepDestino
+	 * @return GoogleDto
+	 */	
+	Optional<GoogleDto> buscaDistanciaPorCep(String cepOrigem, String cepDestino);
 }

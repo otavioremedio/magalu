@@ -1,22 +1,28 @@
 package com.magalu.api.controllers;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.magalu.api.dtos.GoogleDto;
 import com.magalu.api.dtos.ProdutoDto;
 import com.magalu.api.entities.Produto;
 import com.magalu.api.response.Response;
@@ -64,6 +70,29 @@ public class ProdutoController {
 		response.setData(this.converterProdutoDto(produto));
 		return ResponseEntity.ok(response);
 	}
+	
+	/**
+	 * Retorna o produto buscado e as lojas que possuem.
+	 * 
+	 * @return ResponseEntity<Response<ProdutoDto>>
+	 */
+	@GetMapping(value = "/{codigo}/{cepOrigem}")
+	public ResponseEntity<Response<ProdutoDto>> buscarProduto(@PathVariable("codigo") String codigo, @PathVariable("cepOrigem") String cepOrigem) {
+		log.info("Buscando produto e lojas");
+		Response<ProdutoDto> response = new Response<ProdutoDto>();
+		Optional<GoogleDto> googleDto = this.produtoService.buscaDistanciaPorCep(cepOrigem, cepOrigem);
+		
+//		if (!loja.isPresent()) {
+//			log.info("Loja não encontrada para o codigo: {}", codigo);
+//			response.getErrors().add("Loja não encontrada para o codigo " + codigo);
+//			return ResponseEntity.badRequest().body(response);
+//		}
+
+//		response.setData(this.converterLojaDto(loja.get()));
+		return ResponseEntity.ok(response);
+	}
+	
+	
 
 	/**
 	 * Verifica se o produto está cadastrado.
