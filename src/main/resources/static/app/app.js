@@ -1,5 +1,9 @@
 ;(function() {
-    angular
+	
+    let token = localStorage.getItem('token');
+    let admin = localStorage.getItem('admin');
+    
+	angular
         .module('app', ['ngRoute', 'ui.bootstrap', 'oitozero.ngSweetAlert'])
         .controller('headController', function($scope){
         	$scope.isLogged = function () { 
@@ -7,38 +11,53 @@
             } 
         	
         	$scope.isAdmin = function (){
-        		return (admin);
+        		return (token != null && admin === 'true');
+        	}
+        	
+        	$scope.sair = function(){
+        		localStorage.removeItem('token');
+        		window.location = '/';
         	}
         })
         .config(['$routeProvider', function($routeProvider) {
             addRoutes($routeProvider);
         }]);
     
-    let token = localStorage.getItem('token');
-    let admin = localStorage.getItem('admin');
-    
     function addRoutes($routeProvider) {
     	
     	if(token != null){
-    		$routeProvider
-            .when('/loja', {
-                templateUrl: 'views/adicionarLoja.html',
-                controller: 'LojaController',
-                controllerAs: 'vm'
-            })
-            .when('/lojas', {
-                templateUrl: 'views/listagemLojas.html',
-                controller: 'ListagemLojasController',
-                controllerAs: 'vm'
-            })
-            .when('/produto', {
-                templateUrl: 'views/adicionarProduto.html',
-                controller: 'ProdutoController',
-                controllerAs: 'vm'
-            })
-            .otherwise({
-                redirectTo: '/'
-            });
+    		if(admin === 'true'){
+    			$routeProvider
+                .when('/loja', {
+                    templateUrl: 'views/adicionarLoja.html',
+                    controller: 'LojaController',
+                    controllerAs: 'vm'
+                })
+                .when('/produto', {
+                    templateUrl: 'views/adicionarProduto.html',
+                    controller: 'ProdutoController',
+                    controllerAs: 'vm'
+                })
+                .when('/busca', {
+                    templateUrl: 'views/buscarProduto.html',
+                    controller: 'ProdutoController',
+                    controllerAs: 'vm'
+                })
+                .otherwise({
+                    redirectTo: '/'
+                });
+    		} else {
+    			$routeProvider
+    			.when('/busca', {
+                    templateUrl: 'views/buscarProduto.html',
+                    controller: 'ProdutoController',
+                    controllerAs: 'vm'
+                })
+                .otherwise({
+                    redirectTo: '/'
+                });
+    		}
+    		
     	} else {
     		$routeProvider    	
     		.when('/auth', {

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Busque um produto</title>
+</head>
+<body>
+    <h3>Busque um produto</h3>
+    <hr />
+
+    <form ng-submit="vm.buscarProduto()">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Descrição</td> 
+                    <td><input ng-model="vm.produto.descricao" type="text" required /></td> 
+                </tr>
+            </tbody>
+        </table>
+        <div id="espaco"></div>
+        <h4>Lojas</h4>
+   		<hr />
+   		<lista-de-lojas></lista-de-lojas>
+
+        <button type="submit" class="btn btn-primary pull-right">Enviar</button>
+    </form>
+</body>
+</html>

@@ -12,6 +12,12 @@
 	        	
 	        	init();
 	        	
+	        	$scope.local = function(){
+	        		if(window.location.hash === '#!/busca') return 1;
+	        		
+	        		return 0;
+	        	}
+	        	
 	        	$scope.buscar = function(codigo){
 	        		LojaService.find(codigo).then(function(response) {
 	        			$scope.$parent.vm.produto.lojas.push(response.data.data);

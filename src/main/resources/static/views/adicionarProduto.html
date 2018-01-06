@@ -35,8 +35,10 @@
         <div id="espaco"></div>
         <h4>Lojas</h4>
    		<hr />
+   		<label>Código</label> 
+        <input type="text" ng-model="post.codigo"/>
+        <button type="button" ng-click="buscar(post.codigo)" class="btn btn-primary botao">Buscar</button>
    		<lista-de-lojas></lista-de-lojas>
-
         <button type="submit" class="btn btn-primary pull-right">Enviar</button>
     </form>
 </body>

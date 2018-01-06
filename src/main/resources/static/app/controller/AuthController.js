@@ -29,7 +29,7 @@
                     
                 }, function(response) {
                     SweetAlert.swal({
-                        title: 'Erro ao criar nova loja',
+                        title: 'Erro ao tentar logar',
                         text: response.data.mensagem,
                         type: 'error'
                     });

@@ -24,9 +24,11 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse" ng-controller="headController">
             <ul class="nav navbar-nav">
-                <li ng-show="isLogged() && isAdmin()"><a href="#!/loja">Nova Loja</a></li>
-                <li ng-show="isLogged() && isAdmin()"><a href="#!/produto">Novo Produto</a></li>
+                <li ng-if="isAdmin()"><a href="#!/loja">Nova Loja</a></li>
+                <li ng-if="isAdmin()"><a href="#!/produto">Novo Produto</a></li>
+                <li ng-if="isLogged()"><a href="#!/busca">Buscar</a></li>                
             </ul>
+            <button type="button" ng-if="isLogged()" ng-click="sair()" class="btn btn-primary pull-right botaosair">Sair</button>
         </div>
     </div>
 </nav>
