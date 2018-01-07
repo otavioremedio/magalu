@@ -1,7 +1,9 @@
 package com.magalu.api.controllers;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -15,10 +17,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.magalu.api.dtos.BuscaDto;
@@ -49,26 +51,34 @@ public class ProdutoController {
 	 * @return ResponseEntity<Response<ProdutoDto>>
 	 * @throws Exception 
 	 */
-	@GetMapping(value = "/{codigo}/{descricao}/{origem}")
-	public ResponseEntity<Response<BuscaDto>> buscarProduto(@PathVariable("codigo") String codigo, 
-			@PathVariable("descricao") String descricao, @PathVariable("origem") String origem) throws Exception {
+	@GetMapping(value = "/busca")
+	public ResponseEntity<Response<BuscaDto>> buscarProduto(@RequestParam("codigo") Optional<String> codigo, 
+			@RequestParam("descricao") Optional<String> descricao, @RequestParam("origem") String origem) throws Exception {
 		log.info("Buscando produto e lojas");
 		Response<BuscaDto> response = new Response<BuscaDto>();
 		BuscaDto busca = new BuscaDto();
-		Optional<Produto> produto = this.produtoService.buscaPorCodigo(codigo);
+		Optional<Produto> produto;
+		String distancia;
+		
+		if(codigo.isPresent() && codigo.get().length() > 0){
+			produto = this.produtoService.buscaPorCodigo(codigo.get());
+		} else {
+			produto = this.produtoService.buscaPorDescricao(descricao.get());
+		}
+		
 
 		if (!produto.isPresent()) {
-			log.info("Produto não encontrado para o codigo: {}", codigo);
-			response.getErrors().add("Produto não encontrado para o codigo " + codigo);
+			log.info("Produto não encontrado para o codigo: {}", codigo.get());
+			response.getErrors().add("Produto não encontrado para o codigo " + codigo.get());
 			return ResponseEntity.badRequest().body(response);
 		}
 		
 		for (Loja loja : produto.get().getLojas()) {
-			Optional<GoogleDto> googleDto = this.produtoService.buscaDistancia(origem, loja.getCep());
+			distancia = this.produtoService.buscaDistancia(origem, loja.getCep());
 			
 			try{
-				if(googleDto.isPresent()){
-					busca.getLojas().add(this.converterLojaDto(loja, googleDto));
+				if(distancia != null){
+					busca.getLojas().add(this.converterLojaDto(loja, distancia));
 				}
 			} catch(Exception e){
 				throw new Exception("Ocorreu um erro ao tentar calcular a distância entre a loja e o cliente." +
@@ -79,15 +89,6 @@ public class ProdutoController {
 		busca.setValor(produto.get().getValor().toString());
 		response.setData(busca);
 		return ResponseEntity.ok(response);
-	}
-
-	private LojaDto converterLojaDto(Loja loja, Optional<GoogleDto> googleDto) {
-		LojaDto lojaDto = new LojaDto();
-		lojaDto.setCep(loja.getCep());
-		lojaDto.setCodigo(loja.getCodigo());
-		lojaDto.setDescricao(loja.getDescricao());
-		lojaDto.setDistancia(googleDto.get().getRows().get(0).getElements().get(0).getDistance().getText());
-		return lojaDto;
 	}
 
 	/**
@@ -163,6 +164,22 @@ public class ProdutoController {
 		produtoDto.setValor(produto.getValor());
 		produtoDto.setLojas(produto.getLojas());
 		return produtoDto;
+	}
+	
+	/**
+	 * Popula o DTO da loja para retornar na busca.
+	 *
+	 * @param loja, googleDto
+	 * @return LojaDto
+	 */
+	private LojaDto converterLojaDto(Loja loja, String distancia) {
+		LojaDto lojaDto = new LojaDto();
+		
+		lojaDto.setCep(loja.getCep());
+		lojaDto.setCodigo(loja.getCodigo());
+		lojaDto.setDescricao(loja.getDescricao());
+		lojaDto.setDistancia(distancia);
+		return lojaDto;
 	}
 	
 }

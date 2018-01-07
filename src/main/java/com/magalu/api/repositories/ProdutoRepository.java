@@ -5,8 +5,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.magalu.api.entities.Produto;
 
+@Transactional(readOnly = true)
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
-
-	@Transactional(readOnly = true)
+	
 	Produto findByCodigo(String codigo);
+	Produto findByDescricao(String descricao);
 }

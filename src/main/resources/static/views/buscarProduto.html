@@ -13,6 +13,7 @@
             <thead>
                 <tr>
                     <th class="c3"></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -38,16 +39,18 @@
 		  	<table class="table table-striped">
 	            <thead>
 		            <tr>
-		                <th class="c1">Código</th>
 		                <th class="c2">Descrição</th>
+		                <th class="c1">Código da Loja</th>
+		                <th class="c1">Valor</th>
 		                <th class="c2">Distância</th>
 		                <th></th>
 		            </tr>
 	            </thead>
 	            <tbody>
 					<tr ng-repeat="loja in vm.busca.lojas">
+						<td>{{loja.descricao}}</td>
 						<td>{{loja.codigo}}</td>
-						<td>{{loja.descricao}}</td>	
+						<td>{{vm.busca.valor | currency:''}}</td>
 						<td>{{loja.distancia}}</td>					
 					</tr>
 				</tbody>

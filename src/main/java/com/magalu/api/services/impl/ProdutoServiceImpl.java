@@ -1,6 +1,9 @@
 package com.magalu.api.services.impl;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.MessageFormat;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -42,13 +45,25 @@ public class ProdutoServiceImpl implements ProdutoService {
 	}
 
 	@Override
-	public Optional<GoogleDto> buscaDistancia(String origem, String destino) {
+	public String buscaDistancia(String origem, String destino) {
+		log.info("Buscando distancia entre {} e {}", origem, destino);
 		RestTemplate restTemplate = new RestTemplate();
+		DecimalFormat formatter = new DecimalFormat("#,###.00", new DecimalFormatSymbols (new Locale ("pt", "BR")));
+		GoogleDto googleDto = new GoogleDto();
 		
 		ResponseEntity<GoogleDto> googleResponse = restTemplate.exchange(MessageFormat.format(googleApi, origem, destino)
 	    , HttpMethod.GET, null, new ParameterizedTypeReference<GoogleDto>(){});
+		
+		googleDto = googleResponse.getBody();
+		String distancia = googleDto.getRows().get(0).getElements().get(0).getDistance().getText();
+		return formatter.format(Double.parseDouble(distancia.split(" ")[0])) + " " + distancia.split(" ")[1];
+	}
 
-		return Optional.ofNullable(googleResponse.getBody());
+	@Override
+	public Optional<Produto> buscaPorDescricao(String descricao) {
+		log.info("Buscando produto pela descricao: {}", descricao);
+		return Optional.ofNullable(this.produtoRepository.findByDescricao(descricao));
+
 	}
 	
 	

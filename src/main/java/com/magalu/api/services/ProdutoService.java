@@ -13,7 +13,7 @@ public interface ProdutoService {
 	 * @param produto
 	 * @return Produto
 	 */
-	Produto persistir(Produto empresa);
+	Produto persistir(Produto produto);
 	
 	/**
 	 * Procura produto por codigo.
@@ -24,10 +24,18 @@ public interface ProdutoService {
 	Optional<Produto> buscaPorCodigo(String codigo);
 	
 	/**
+	 * Procura produto por descricao.
+	 * 
+	 * @param descricao
+	 * @return Produto
+	 */	
+	Optional<Produto> buscaPorDescricao(String descricao);
+	
+	/**
 	 * Procura distancia por cep.
 	 * 
 	 * @param cepOrigem e cepDestino
-	 * @return GoogleDto
+	 * @return String
 	 */	
-	Optional<GoogleDto> buscaDistancia(String origem, String destino);
+	String buscaDistancia(String origem, String destino);
 }

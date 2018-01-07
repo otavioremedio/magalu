@@ -6,8 +6,8 @@
             return {
                 busca: function(data){
                 	//corrigir querystring
-                	return $http.get('api/produto/' + data.codigo + '/' + 'X' + '/' + data.origem
-                			, {headers : {Authorization : 'Bearer ' + localStorage.getItem('token')}});
+                	return $http.get('api/produto/busca'
+                			, {params: data, headers : {Authorization : 'Bearer ' + localStorage.getItem('token')}});
                 },
             	save: function(data) {
             		return $http({
