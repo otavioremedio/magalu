@@ -23,9 +23,8 @@
                     	localStorage.setItem('admin', true);
                     } else {
                     	localStorage.setItem('admin', false);
+                    	window.location = '/';
                     }  
-                    
-                    window.location = '/';
                     
                 }, function(response) {
                     SweetAlert.swal({

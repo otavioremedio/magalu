@@ -1,5 +1,6 @@
 package com.magalu.api.services.impl;
 
+import java.text.MessageFormat;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -41,10 +42,10 @@ public class ProdutoServiceImpl implements ProdutoService {
 	}
 
 	@Override
-	public Optional<GoogleDto> buscaDistanciaPorCep(String cepOrigem, String cepDestino) {
+	public Optional<GoogleDto> buscaDistancia(String origem, String destino) {
 		RestTemplate restTemplate = new RestTemplate();
 		
-		ResponseEntity<GoogleDto> googleResponse = restTemplate.exchange(googleApi.replace("$1", cepOrigem).replace("$2", cepDestino)
+		ResponseEntity<GoogleDto> googleResponse = restTemplate.exchange(MessageFormat.format(googleApi, origem, destino)
 	    , HttpMethod.GET, null, new ParameterizedTypeReference<GoogleDto>(){});
 
 		return Optional.ofNullable(googleResponse.getBody());

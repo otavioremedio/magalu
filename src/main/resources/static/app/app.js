@@ -54,7 +54,7 @@
                     controllerAs: 'vm'
                 })
                 .otherwise({
-                    redirectTo: '/'
+                    redirectTo: '/busca'
                 });
     		}
     		

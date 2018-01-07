@@ -76,11 +76,11 @@ public class ProdutoController {
 	 * 
 	 * @return ResponseEntity<Response<ProdutoDto>>
 	 */
-	@GetMapping(value = "/{codigo}/{cepOrigem}")
-	public ResponseEntity<Response<ProdutoDto>> buscarProduto(@PathVariable("codigo") String codigo, @PathVariable("cepOrigem") String cepOrigem) {
+	@GetMapping(value = "/{codigo}/{origem}")
+	public ResponseEntity<Response<ProdutoDto>> buscarProduto(@PathVariable("codigo") String codigo, @PathVariable("origem") String origem) {
 		log.info("Buscando produto e lojas");
 		Response<ProdutoDto> response = new Response<ProdutoDto>();
-		Optional<GoogleDto> googleDto = this.produtoService.buscaDistanciaPorCep(cepOrigem, cepOrigem);
+		Optional<GoogleDto> googleDto = this.produtoService.buscaDistancia(origem, origem);
 		
 //		if (!loja.isPresent()) {
 //			log.info("Loja não encontrada para o codigo: {}", codigo);

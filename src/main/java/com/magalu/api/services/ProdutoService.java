@@ -29,5 +29,5 @@ public interface ProdutoService {
 	 * @param cepOrigem e cepDestino
 	 * @return GoogleDto
 	 */	
-	Optional<GoogleDto> buscaDistanciaPorCep(String cepOrigem, String cepDestino);
+	Optional<GoogleDto> buscaDistancia(String origem, String destino);
 }
