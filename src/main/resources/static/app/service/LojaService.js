@@ -5,7 +5,8 @@
 
             return {
                 find: function(codigo){
-                	return $http.get('api/loja/' + codigo);
+                	return $http.get('api/loja/', codigo);
+
                 },
             	save: function(data) {
             		return $http({

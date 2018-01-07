@@ -8,8 +8,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -39,6 +37,28 @@ public class ProdutoController {
 	private ProdutoService produtoService;
 
 	public ProdutoController() {
+	}
+	
+	/**
+	 * Retorna o produto buscado e as lojas que possuem.
+	 * 
+	 * @return ResponseEntity<Response<ProdutoDto>>
+	 */
+	@GetMapping(value = "/{codigo}/{descricao}/{origem}")
+	public ResponseEntity<Response<ProdutoDto>> buscarProduto(@PathVariable("codigo") String codigo, 
+			@PathVariable("descricao") String descricao, @PathVariable("origem") String origem) {
+		log.info("Buscando produto e lojas");
+		Response<ProdutoDto> response = new Response<ProdutoDto>();
+		Optional<GoogleDto> googleDto = this.produtoService.buscaDistancia(origem, origem);
+		
+//		if (!loja.isPresent()) {
+//			log.info("Loja não encontrada para o codigo: {}", codigo);
+//			response.getErrors().add("Loja não encontrada para o codigo " + codigo);
+//			return ResponseEntity.badRequest().body(response);
+//		}
+
+//		response.setData(this.converterLojaDto(loja.get()));
+		return ResponseEntity.ok(response);
 	}
 
 	/**
@@ -70,29 +90,6 @@ public class ProdutoController {
 		response.setData(this.converterProdutoDto(produto));
 		return ResponseEntity.ok(response);
 	}
-	
-	/**
-	 * Retorna o produto buscado e as lojas que possuem.
-	 * 
-	 * @return ResponseEntity<Response<ProdutoDto>>
-	 */
-	@GetMapping(value = "/{codigo}/{origem}")
-	public ResponseEntity<Response<ProdutoDto>> buscarProduto(@PathVariable("codigo") String codigo, @PathVariable("origem") String origem) {
-		log.info("Buscando produto e lojas");
-		Response<ProdutoDto> response = new Response<ProdutoDto>();
-		Optional<GoogleDto> googleDto = this.produtoService.buscaDistancia(origem, origem);
-		
-//		if (!loja.isPresent()) {
-//			log.info("Loja não encontrada para o codigo: {}", codigo);
-//			response.getErrors().add("Loja não encontrada para o codigo " + codigo);
-//			return ResponseEntity.badRequest().body(response);
-//		}
-
-//		response.setData(this.converterLojaDto(loja.get()));
-		return ResponseEntity.ok(response);
-	}
-	
-	
 
 	/**
 	 * Verifica se o produto está cadastrado.

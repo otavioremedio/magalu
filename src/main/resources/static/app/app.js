@@ -5,7 +5,7 @@
     
 	angular
         .module('app', ['ngRoute', 'ui.bootstrap', 'oitozero.ngSweetAlert'])
-        .controller('headController', function($scope){
+         .controller('headController', function($scope){
         	$scope.isLogged = function () { 
             	return (token != null);
             } 
@@ -28,17 +28,17 @@
     	if(token != null){
     		if(admin === 'true'){
     			$routeProvider
-                .when('/loja', {
+                .when('base/loja', {
                     templateUrl: 'views/adicionarLoja.html',
                     controller: 'LojaController',
                     controllerAs: 'vm'
                 })
-                .when('/produto', {
+                .when('base/produto', {
                     templateUrl: 'views/adicionarProduto.html',
                     controller: 'ProdutoController',
                     controllerAs: 'vm'
                 })
-                .when('/busca', {
+                .when('base/busca', {
                     templateUrl: 'views/buscarProduto.html',
                     controller: 'ProdutoController',
                     controllerAs: 'vm'
@@ -48,7 +48,7 @@
                 });
     		} else {
     			$routeProvider
-    			.when('/busca', {
+    			.when('base/busca', {
                     templateUrl: 'views/buscarProduto.html',
                     controller: 'ProdutoController',
                     controllerAs: 'vm'
@@ -68,6 +68,7 @@
     		.otherwise({
                 redirectTo: '/auth'
             }); 
-    	}    	
+    	}    
+    	
     }
 })();

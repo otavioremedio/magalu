@@ -22,9 +22,10 @@
                     if(response.data.data.authorities.some(x => x.authority === "ROLE_ADMIN")){
                     	localStorage.setItem('admin', true);
                     } else {
-                    	localStorage.setItem('admin', false);
-                    	window.location = '/';
+                    	localStorage.setItem('admin', false);                    	
                     }  
+                    
+                    window.location = '/';
                     
                 }, function(response) {
                     SweetAlert.swal({

@@ -29,7 +29,7 @@ import com.magalu.api.security.dto.TokenDto;
 import com.magalu.api.security.utils.JwtTokenUtil;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/auth")
 @CrossOrigin(origins = "*")
 public class AuthenticationController {
 

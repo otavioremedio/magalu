@@ -5,7 +5,7 @@
 
             return {
                 logar: function(data) {
-                	return $http.post('/auth', data);
+                	return $http.post('api/auth', data);
                 }
             };
         }]);

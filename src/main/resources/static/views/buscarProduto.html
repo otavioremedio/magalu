@@ -1,33 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<base href="/">
     <meta charset="UTF-8">
     <title>Busque um produto</title>
 </head>
 <body>
-    <h3>Busque um produto</h3>
+    <h3>Busque um produto por código ou descrição</h3>
     <hr />
 
     <form ng-submit="vm.buscarProduto()">
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th></th>
+                    <th class="c3"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    <td>Código do produto</td> 
+                    <td><input ng-model="vm.busca.codigo" type="text" ng-required="!vm.busca.descricao" /></td> 
+                </tr>
+                <tr>
                     <td>Descrição</td> 
-                    <td><input ng-model="vm.produto.descricao" type="text" required /></td> 
+                    <td><input ng-model="vm.busca.descricao" placeholder="Ex: Celular" type="text" ng-required="!vm.busca.codigo" /></td> 
+                </tr>
+                <tr>
+                    <td>Seu endereço ou CEP</td> 
+                    <td><input class="input50" placeholder="Ex: Av Paulista, São Paulo, SP ou 123456-000"  ng-model="vm.busca.origem" type="text" required /></td> 
                 </tr>
             </tbody>
         </table>
         <div id="espaco"></div>
-        <h4>Lojas</h4>
-   		<hr />
-   		<lista-de-lojas></lista-de-lojas>
-
-        <button type="submit" class="btn btn-primary pull-right">Enviar</button>
+        <div ng-show="vm.produto.lojas.length > 0">
+	        <h4>Lojas</h4>
+	   		<hr />
+	   		<div>
+		  	<table class="table table-striped">
+	            <thead>
+		            <tr>
+		                <th class="c1">Código</th>
+		                <th class="c2">Descrição</th>
+		                <th class="c2">Localização</th>
+		                <th></th>
+		            </tr>
+	            </thead>
+	            <tbody>
+					<tr ng-repeat="loja in vm.produto.lojas">
+						<td>{{loja.codigo}}</td>
+						<td>{{loja.descricao}}</td>					
+					</tr>
+				</tbody>
+	        </table>
+		  </div>
+	  </div>
+      <button type="submit" class="btn btn-primary pull-right">Enviar</button>
     </form>
 </body>
 </html>
