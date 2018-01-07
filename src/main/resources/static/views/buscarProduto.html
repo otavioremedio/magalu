@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<base href="/">
     <meta charset="UTF-8">
     <title>Busque um produto</title>
 </head>
@@ -32,7 +31,7 @@
             </tbody>
         </table>
         <div id="espaco"></div>
-        <div ng-show="vm.produto.lojas.length > 0">
+        <div ng-show="vm.busca.lojas.length > 0">
 	        <h4>Lojas</h4>
 	   		<hr />
 	   		<div>
@@ -41,14 +40,15 @@
 		            <tr>
 		                <th class="c1">Código</th>
 		                <th class="c2">Descrição</th>
-		                <th class="c2">Localização</th>
+		                <th class="c2">Distância</th>
 		                <th></th>
 		            </tr>
 	            </thead>
 	            <tbody>
-					<tr ng-repeat="loja in vm.produto.lojas">
+					<tr ng-repeat="loja in vm.busca.lojas">
 						<td>{{loja.codigo}}</td>
-						<td>{{loja.descricao}}</td>					
+						<td>{{loja.descricao}}</td>	
+						<td>{{loja.distancia}}</td>					
 					</tr>
 				</tbody>
 	        </table>

@@ -1,6 +1,7 @@
 package com.magalu.api.controllers;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -20,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.magalu.api.dtos.BuscaDto;
 import com.magalu.api.dtos.GoogleDto;
+import com.magalu.api.dtos.LojaDto;
 import com.magalu.api.dtos.ProdutoDto;
+import com.magalu.api.entities.Loja;
 import com.magalu.api.entities.Produto;
 import com.magalu.api.response.Response;
 import com.magalu.api.services.ProdutoService;
@@ -43,22 +47,47 @@ public class ProdutoController {
 	 * Retorna o produto buscado e as lojas que possuem.
 	 * 
 	 * @return ResponseEntity<Response<ProdutoDto>>
+	 * @throws Exception 
 	 */
 	@GetMapping(value = "/{codigo}/{descricao}/{origem}")
-	public ResponseEntity<Response<ProdutoDto>> buscarProduto(@PathVariable("codigo") String codigo, 
-			@PathVariable("descricao") String descricao, @PathVariable("origem") String origem) {
+	public ResponseEntity<Response<BuscaDto>> buscarProduto(@PathVariable("codigo") String codigo, 
+			@PathVariable("descricao") String descricao, @PathVariable("origem") String origem) throws Exception {
 		log.info("Buscando produto e lojas");
-		Response<ProdutoDto> response = new Response<ProdutoDto>();
-		Optional<GoogleDto> googleDto = this.produtoService.buscaDistancia(origem, origem);
-		
-//		if (!loja.isPresent()) {
-//			log.info("Loja não encontrada para o codigo: {}", codigo);
-//			response.getErrors().add("Loja não encontrada para o codigo " + codigo);
-//			return ResponseEntity.badRequest().body(response);
-//		}
+		Response<BuscaDto> response = new Response<BuscaDto>();
+		BuscaDto busca = new BuscaDto();
+		Optional<Produto> produto = this.produtoService.buscaPorCodigo(codigo);
 
-//		response.setData(this.converterLojaDto(loja.get()));
+		if (!produto.isPresent()) {
+			log.info("Produto não encontrado para o codigo: {}", codigo);
+			response.getErrors().add("Produto não encontrado para o codigo " + codigo);
+			return ResponseEntity.badRequest().body(response);
+		}
+		
+		for (Loja loja : produto.get().getLojas()) {
+			Optional<GoogleDto> googleDto = this.produtoService.buscaDistancia(origem, loja.getCep());
+			
+			try{
+				if(googleDto.isPresent()){
+					busca.getLojas().add(this.converterLojaDto(loja, googleDto));
+				}
+			} catch(Exception e){
+				throw new Exception("Ocorreu um erro ao tentar calcular a distância entre a loja e o cliente." +
+									" Verifique se o endereço ou cep estão corretos. O cep deve possuir um traço.");
+			}
+		}
+
+		busca.setValor(produto.get().getValor().toString());
+		response.setData(busca);
 		return ResponseEntity.ok(response);
+	}
+
+	private LojaDto converterLojaDto(Loja loja, Optional<GoogleDto> googleDto) {
+		LojaDto lojaDto = new LojaDto();
+		lojaDto.setCep(loja.getCep());
+		lojaDto.setCodigo(loja.getCodigo());
+		lojaDto.setDescricao(loja.getDescricao());
+		lojaDto.setDistancia(googleDto.get().getRows().get(0).getElements().get(0).getDistance().getText());
+		return lojaDto;
 	}
 
 	/**
@@ -135,4 +164,5 @@ public class ProdutoController {
 		produtoDto.setLojas(produto.getLojas());
 		return produtoDto;
 	}
+	
 }

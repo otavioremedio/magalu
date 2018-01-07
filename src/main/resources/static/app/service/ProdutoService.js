@@ -5,7 +5,9 @@
 
             return {
                 busca: function(data){
-                	return $http.get('api/loja/');
+                	//corrigir querystring
+                	return $http.get('api/produto/' + data.codigo + '/' + 'X' + '/' + data.origem
+                			, {headers : {Authorization : 'Bearer ' + localStorage.getItem('token')}});
                 },
             	save: function(data) {
             		return $http({

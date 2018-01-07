@@ -11,6 +11,7 @@ public class LojaDto {
 	private String codigo;
 	private String descricao;
 	private String cep;
+	private String distancia;
 
 	public LojaDto() {
 	}
@@ -53,9 +54,20 @@ public class LojaDto {
 		this.cep = cep;
 	}
 
+	public String getDistancia() {
+		return distancia;
+	}
+
+	public void setDistancia(String distancia) {
+		this.distancia = distancia;
+	}
+
 	@Override
 	public String toString() {
-		return "LojaDto [id=" + id + ", codigo=" + codigo + ", descricao=" + descricao + ", cep=" + cep + "]";
+		return "LojaDto [id=" + id + ", codigo=" + codigo + ", descricao=" + descricao + ", cep=" + cep + ", distancia="
+				+ distancia + "]";
 	}
+
+	
 
 }

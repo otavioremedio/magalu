@@ -16,7 +16,7 @@
         	
         	$scope.sair = function(){
         		localStorage.removeItem('token');
-        		window.location = '/';
+        		window.location = '/index.html';
         	}
         })
         .config(['$routeProvider', function($routeProvider) {
@@ -28,27 +28,27 @@
     	if(token != null){
     		if(admin === 'true'){
     			$routeProvider
-                .when('base/loja', {
+                .when('/loja', {
                     templateUrl: 'views/adicionarLoja.html',
                     controller: 'LojaController',
                     controllerAs: 'vm'
                 })
-                .when('base/produto', {
+                .when('/produto', {
                     templateUrl: 'views/adicionarProduto.html',
                     controller: 'ProdutoController',
                     controllerAs: 'vm'
                 })
-                .when('base/busca', {
+                .when('/busca', {
                     templateUrl: 'views/buscarProduto.html',
                     controller: 'ProdutoController',
                     controllerAs: 'vm'
                 })
                 .otherwise({
-                    redirectTo: '/'
+                    redirectTo: '/index.html#!'
                 });
     		} else {
     			$routeProvider
-    			.when('base/busca', {
+    			.when('/busca', {
                     templateUrl: 'views/buscarProduto.html',
                     controller: 'ProdutoController',
                     controllerAs: 'vm'

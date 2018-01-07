@@ -5,7 +5,7 @@
 
             return {
                 find: function(codigo){
-                	return $http.get('api/loja/', codigo);
+                	return $http.get('api/loja/' + codigo, {headers : {Authorization : 'Bearer ' + localStorage.getItem('token')}});
 
                 },
             	save: function(data) {

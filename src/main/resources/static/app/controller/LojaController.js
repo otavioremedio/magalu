@@ -26,7 +26,7 @@
                        controllerAs: 'vm',
                        controller: ['$scope', function($scope) {                         
                     	   $scope.$on('modal.closing', function(event, reason, closed){                    		   
-                    		   window.location = '/';   
+                    		   window.location = '/index.html';   
                     	   })                           
                        }]                       
                    });

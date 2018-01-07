@@ -47,20 +47,9 @@
         		
         		ProdutoService.busca(data).then(function(response) {
                     SweetAlert.close();
+                    vm.busca = response.data.data 
 
-                    $uibModal.open({
-                       ariaLabelledBy: 'modal-title',
-                       ariaDescribedBy: 'modal-body',
-                       templateUrl: 'components/modals/sucessoAoAdicionarProduto.html',
-                       controllerAs: 'vm',
-                       controller: ['$scope', function($scope) {                         
-                    	   $scope.$on('modal.closing', function(event, reason, closed){                    		   
-                    		   window.location = '/';   
-                    	   })                           
-                       }]                       
-                   });
-                    
-                }, function(response) {
+        		}, function(response) {
                 	var mensagem = '';
                 	
                 	if(response.data.mensagem != null){
@@ -98,7 +87,7 @@
                        controllerAs: 'vm',
                        controller: ['$scope', function($scope) {                         
                     	   $scope.$on('modal.closing', function(event, reason, closed){                    		   
-                    		   window.location = '/';   
+                    		   window.location = '/index.html';   
                     	   })                           
                        }]                       
                    });

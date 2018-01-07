@@ -20,12 +20,12 @@
                     localStorage.setItem('token', response.data.data.token);
                     
                     if(response.data.data.authorities.some(x => x.authority === "ROLE_ADMIN")){
-                    	localStorage.setItem('admin', true);
+                    	localStorage.setItem('admin', true);                    
                     } else {
-                    	localStorage.setItem('admin', false);                    	
+                    	localStorage.setItem('admin', false);                      	
                     }  
                     
-                    window.location = '/';
+                    window.location = '/index.html';
                     
                 }, function(response) {
                     SweetAlert.swal({
