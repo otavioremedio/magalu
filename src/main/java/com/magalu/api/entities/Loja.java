@@ -23,6 +23,12 @@ public class Loja implements Serializable {
 	public Loja() {
 	}
 
+	public Loja(String descricao, String codigo, String cep) {
+		this.descricao = descricao;
+		this.codigo = codigo;
+		this.cep = cep;
+	}
+
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="loja_id")

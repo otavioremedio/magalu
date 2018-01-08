@@ -7,16 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.magalu.api.entities.Conta;
 import com.magalu.api.entities.Loja;
-import com.magalu.api.repositories.ContaRepository;
 import com.magalu.api.repositories.LojaRepository;
-import com.magalu.api.services.ContaService;
 import com.magalu.api.services.LojaService;
 
 @Service
 public class LojaServiceImpl implements LojaService {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(LojaServiceImpl.class);
 
 	@Autowired
@@ -25,7 +22,7 @@ public class LojaServiceImpl implements LojaService {
 	@Override
 	public Loja persistir(Loja loja) {
 		log.info("Persistindo loja: {}", loja);
-		return this.lojaRepository.save(loja); 
+		return this.lojaRepository.save(loja);
 	}
 
 	@Override
@@ -33,7 +30,7 @@ public class LojaServiceImpl implements LojaService {
 		log.info("Buscando loja pelo codigo: {}", codigo);
 		return Optional.ofNullable(this.lojaRepository.findByCodigo(codigo));
 	}
-	
-	
-	
+
+
+
 }
