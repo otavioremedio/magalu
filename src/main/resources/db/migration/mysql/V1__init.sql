@@ -5,7 +5,7 @@ CREATE TABLE `conta` (
   `perfil` varchar(255) NOT NULL,
   `senha` varchar(255) NOT NULL,
   PRIMARY KEY (`conta_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `loja` (
   `loja_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -13,7 +13,7 @@ CREATE TABLE `loja` (
   `codigo` varchar(255) NOT NULL,
   `descricao` varchar(255) NOT NULL,
   PRIMARY KEY (`loja_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `produto` (
   `produto_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -21,7 +21,7 @@ CREATE TABLE `produto` (
   `descricao` varchar(255) NOT NULL,
   `valor` decimal(19,2) NOT NULL,
   PRIMARY KEY (`produto_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `produto_lojas` (
   `produto_produto_id` bigint(20) NOT NULL,
@@ -30,6 +30,6 @@ CREATE TABLE `produto_lojas` (
   KEY `FK8npgx9wq4w845fdjw4x3fo98w` (`produto_produto_id`),
   CONSTRAINT `FK8npgx9wq4w845fdjw4x3fo98w` FOREIGN KEY (`produto_produto_id`) REFERENCES `produto` (`produto_id`),
   CONSTRAINT `FKmdog3gny0voolhvbt2qah8sn0` FOREIGN KEY (`lojas_loja_id`) REFERENCES `loja` (`loja_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
