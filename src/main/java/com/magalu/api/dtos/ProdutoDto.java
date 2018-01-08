@@ -26,7 +26,7 @@ public class ProdutoDto {
     private String codigo;
     private String descricao;
     private BigDecimal valor;
-    private List<Loja> lojas;
+    private List<LojaDto> lojas;
 
     public Long getId() {
 		return id;
@@ -66,11 +66,11 @@ public class ProdutoDto {
 	}
 
 	@NotEmpty(message = "Pelo menos uma loja deve ser se escolhida.")
-	public List<Loja> getLojas() {
+	public List<LojaDto> getLojas() {
 		return lojas;
 	}
 
-	public void setLojas(List<Loja> lojas) {
+	public void setLojas(List<LojaDto> lojas) {
 		this.lojas = lojas;
 	}
 

@@ -63,10 +63,8 @@ public class LojaController {
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
-
-		this.lojaService.persistir(loja);
-
-		response.setData(this.converterLojaDto(loja));
+		
+		response.setData(this.converterLojaDto(this.lojaService.persistir(loja)));
 		return ResponseEntity.ok(response);
 	}
 	
@@ -77,7 +75,7 @@ public class LojaController {
 	 * @return ResponseEntity<Response<LojaDto>>
 	 */
 	@GetMapping(value = "/{codigo}")
-	public ResponseEntity<Response<LojaDto>> buscarLojas(@PathVariable("codigo") String codigo) {
+	public ResponseEntity<Response<LojaDto>> buscarLoja(@PathVariable("codigo") String codigo) {
 		log.info("Buscando lojas");
 		Response<LojaDto> response = new Response<LojaDto>();
 		Optional<Loja> loja = lojaService.buscaPorCodigo(codigo);
@@ -129,6 +127,7 @@ public class LojaController {
 	 */
 	private LojaDto converterLojaDto(Loja loja) {
 		LojaDto lojaDto = new LojaDto();
+		lojaDto.setId(loja.getId());
 		lojaDto.setDescricao(loja.getDescricao());
 		lojaDto.setCodigo(loja.getCodigo());
 		lojaDto.setCep(loja.getCep());

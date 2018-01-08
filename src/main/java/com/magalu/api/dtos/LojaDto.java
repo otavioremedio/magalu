@@ -1,5 +1,7 @@
 package com.magalu.api.dtos;
 
+import java.util.Optional;
+
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
@@ -11,7 +13,7 @@ public class LojaDto {
 	private String codigo;
 	private String descricao;
 	private String cep;
-	private String distancia;
+	private Optional<String> distancia;
 
 	public LojaDto() {
 	}
@@ -54,11 +56,11 @@ public class LojaDto {
 		this.cep = cep;
 	}
 
-	public String getDistancia() {
+	public Optional<String> getDistancia() {
 		return distancia;
 	}
 
-	public void setDistancia(String distancia) {
+	public void setDistancia(Optional<String> distancia) {
 		this.distancia = distancia;
 	}
 

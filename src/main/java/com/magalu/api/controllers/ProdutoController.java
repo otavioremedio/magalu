@@ -1,9 +1,7 @@
 package com.magalu.api.controllers;
 
 import java.security.NoSuchAlgorithmException;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.magalu.api.dtos.BuscaDto;
-import com.magalu.api.dtos.GoogleDto;
 import com.magalu.api.dtos.LojaDto;
 import com.magalu.api.dtos.ProdutoDto;
 import com.magalu.api.entities.Loja;
@@ -78,7 +75,7 @@ public class ProdutoController {
 			
 			try{
 				if(distancia != null){
-					busca.getLojas().add(this.converterLojaDto(loja, distancia));
+					busca.getLojas().add(this.converterLojaDto(loja, Optional.of(distancia)));
 				}
 			} catch(Exception e){
 				throw new Exception("Ocorreu um erro ao tentar calcular a distância entre a loja e o cliente." +
@@ -114,10 +111,8 @@ public class ProdutoController {
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
-
-		this.produtoService.persistir(produto);
-
-		response.setData(this.converterProdutoDto(produto));
+		
+		response.setData(this.converterProdutoDto(this.produtoService.persistir(produto)));
 		return ResponseEntity.ok(response);
 	}
 
@@ -147,7 +142,12 @@ public class ProdutoController {
 		produto.setDescricao(produtoDto.getDescricao());
 		produto.setCodigo(produtoDto.getCodigo());
 		produto.setValor(produtoDto.getValor());
-		produto.setLojas(produtoDto.getLojas());
+		produto.setLojas(new ArrayList<Loja>());
+		
+		for (LojaDto lojaDto : produtoDto.getLojas()) {
+			produto.getLojas().add(converterDtoLoja(lojaDto));
+		}
+		
 		return produto;
 	}
 
@@ -159,10 +159,16 @@ public class ProdutoController {
 	 */
 	private ProdutoDto converterProdutoDto(Produto produto) {
 		ProdutoDto produtoDto = new ProdutoDto();
+		produtoDto.setId(produto.getId());
 		produtoDto.setDescricao(produto.getDescricao());
 		produtoDto.setCodigo(produto.getCodigo());
 		produtoDto.setValor(produto.getValor());
-		produtoDto.setLojas(produto.getLojas());
+		produtoDto.setLojas(new ArrayList<LojaDto>());
+		
+		for (Loja loja : produto.getLojas()) {
+			produtoDto.getLojas().add(converterLojaDto(loja, null));
+		}
+		
 		return produtoDto;
 	}
 	
@@ -172,14 +178,31 @@ public class ProdutoController {
 	 * @param loja, googleDto
 	 * @return LojaDto
 	 */
-	private LojaDto converterLojaDto(Loja loja, String distancia) {
+	private LojaDto converterLojaDto(Loja loja, Optional<String> distancia) {
 		LojaDto lojaDto = new LojaDto();
-		
+		lojaDto.setId(loja.getId());
 		lojaDto.setCep(loja.getCep());
 		lojaDto.setCodigo(loja.getCodigo());
 		lojaDto.setDescricao(loja.getDescricao());
 		lojaDto.setDistancia(distancia);
 		return lojaDto;
+	}
+	
+	/**
+	 * Converte os dados do DTO para loja.
+	 *
+	 * @param lojaDto
+	 * @param result
+	 * @return Loja
+	 * @throws NoSuchAlgorithmException
+	 */
+	private Loja converterDtoLoja(LojaDto lojaDto) {
+		Loja loja = new Loja();
+		loja.setId(lojaDto.getId());
+		loja.setDescricao(lojaDto.getDescricao());
+		loja.setCodigo(lojaDto.getCodigo());
+		loja.setCep(lojaDto.getCep());
+		return loja;
 	}
 	
 }
