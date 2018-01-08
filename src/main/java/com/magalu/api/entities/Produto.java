@@ -63,7 +63,7 @@ public class Produto {
 		this.valor = valor;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY)
 	public List<Loja> getLojas() {
 		return lojas;
 	}
