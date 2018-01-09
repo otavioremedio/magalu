@@ -7,6 +7,7 @@
             function init() { 
             	vm.produto = {};
             	vm.produto.lojas = [];
+            	vm.busca = {};
             }
             
             function buscar(codigo){
