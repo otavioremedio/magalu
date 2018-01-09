@@ -7,7 +7,8 @@
             function init() { 
             	vm.produto = {};
             	vm.produto.lojas = [];
-            	vm.busca = {};
+            	vm.busca = {}; 
+            	vm.codigoBusca = '';
             }
             
             function buscar(codigo){
@@ -88,7 +89,7 @@
                        controllerAs: 'vm',
                        controller: ['$scope', function($scope) {                         
                     	   $scope.$on('modal.closing', function(event, reason, closed){                    		   
-                    		   window.location = '/index.html';   
+                    		   init();  
                     	   })                           
                        }]                       
                    });

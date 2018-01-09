@@ -44,7 +44,7 @@
                     controllerAs: 'vm'
                 })
                 .otherwise({
-                    redirectTo: '/index.html#!'
+                    redirectTo: '/index.html'
                 });
     		} else {
     			$routeProvider
