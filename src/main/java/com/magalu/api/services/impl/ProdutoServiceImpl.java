@@ -62,7 +62,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Override
 	public Optional<Produto> buscaPorDescricao(String descricao) {
 		log.info("Buscando produto pela descricao: {}", descricao);
-		return Optional.ofNullable(this.produtoRepository.findByDescricao(descricao));
+		return Optional.ofNullable(this.produtoRepository.findByDescricaoIgnoreCase(descricao));
 
 	}
 	

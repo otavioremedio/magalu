@@ -9,5 +9,5 @@ import com.magalu.api.entities.Produto;
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 	
 	Produto findByCodigo(String codigo);
-	Produto findByDescricao(String descricao);
+	Produto findByDescricaoIgnoreCase(String descricao);
 }
