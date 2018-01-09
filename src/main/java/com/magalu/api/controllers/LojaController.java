@@ -1,7 +1,6 @@
 package com.magalu.api.controllers;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -9,7 +8,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -40,6 +38,7 @@ public class LojaController {
 	public LojaController() {
 	}
 
+
 	/**
 	 * Cadastra uma loja no sistema
 	 *
@@ -63,15 +62,15 @@ public class LojaController {
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
-		
+
 		response.setData(this.converterLojaDto(this.lojaService.persistir(loja)));
 		return ResponseEntity.ok(response);
 	}
-	
-	
+
+
 	/**
 	 * Retorna lojas.
-	 * 
+	 *
 	 * @return ResponseEntity<Response<LojaDto>>
 	 */
 	@GetMapping(value = "/{codigo}")
