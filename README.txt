@@ -3,6 +3,7 @@
 - usar o maven install para compilar a aplicação
 - subir como Spring Boot App
 - Base de dados está em H2 (memória)
+- No application.properties descomentar a conexão do H2, foi comentado devido a problemas no deploy de produção no heroku
 - Arquivo de dados para desenv: data.sql
 - Logar como admin: admin@magalu.com.br senha 123456
 - Logar como cliente: cliente@magalu.com.br senha 123456
