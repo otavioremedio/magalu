@@ -50,7 +50,7 @@ public class ProdutoController {
 	 */
 	@GetMapping(value = "/busca")
 	public ResponseEntity<Response<BuscaDto>> buscarProduto(@RequestParam("codigo") Optional<String> codigo,
-			@RequestParam("descricao") Optional<String> descricao, @RequestParam("origem") String origem) throws Exception {
+			@RequestParam("descricao") Optional<String> descricao, @RequestParam("origem") String origem) {
 		log.info("Buscando produto e lojas");
 		Response<BuscaDto> response = new Response<BuscaDto>();
 		BuscaDto busca = new BuscaDto();
@@ -73,13 +73,12 @@ public class ProdutoController {
 		for (Loja loja : produto.get().getLojas()) {
 			distancia = this.produtoService.buscaDistancia(origem, loja.getCep());
 
-			try{
-				if(distancia != null){
-					busca.getLojas().add(this.converterLojaDto(loja, Optional.of(distancia)));
-				}
-			} catch(Exception e){
-				throw new Exception("Ocorreu um erro ao tentar calcular a distância entre a loja e o cliente." +
-									" Verifique se o endereço ou cep estão corretos. O cep deve possuir um traço.");
+			if(distancia != null){
+				busca.getLojas().add(this.converterLojaDto(loja, Optional.of(distancia)));
+			} else {
+				response.getErrors().add("Ocorreu um erro ao tentar calcular a distância entre a loja e o cliente." +
+										 "Verifique se o endereço ou cep estão corretos. O cep deve possuir um traço.");
+				return ResponseEntity.badRequest().body(response);
 			}
 		}
 
