@@ -18,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.magalu.api.dtos.DistanceDto;
 import com.magalu.api.entities.Loja;
 import com.magalu.api.entities.Produto;
 import com.magalu.api.repositories.LojaRepository;
@@ -66,11 +67,11 @@ public class ProdutoServiceTest {
 	public void buscaDistancia() {
 		String origem = "01102-000";
 		String destino = "02010-000";
-		String distancia;
+		DistanceDto distanceDto;
 
-		distancia = this.produtoService.buscaDistancia(origem, destino);
+		distanceDto = this.produtoService.buscaDistancia(origem, destino);
 
-		assertEquals("2,10 km", distancia);
+		assertEquals("2,10 km", distanceDto.getText());
 	}
 
 	@Test

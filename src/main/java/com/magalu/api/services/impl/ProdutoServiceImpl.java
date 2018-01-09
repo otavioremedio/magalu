@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.magalu.api.dtos.DistanceDto;
 import com.magalu.api.dtos.GoogleDto;
 import com.magalu.api.entities.Produto;
 import com.magalu.api.repositories.ProdutoRepository;
@@ -45,7 +46,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 	}
 
 	@Override
-	public String buscaDistancia(String origem, String destino) {
+	public DistanceDto buscaDistancia(String origem, String destino) {
 		log.info("Buscando distancia entre {} e {}", origem, destino);
 		RestTemplate restTemplate = new RestTemplate();
 		DecimalFormat formatter = new DecimalFormat("#,###.00", new DecimalFormatSymbols (new Locale ("pt", "BR")));
@@ -55,8 +56,11 @@ public class ProdutoServiceImpl implements ProdutoService {
 	    , HttpMethod.GET, null, new ParameterizedTypeReference<GoogleDto>(){});
 		
 		googleDto = googleResponse.getBody();
-		String distancia = googleDto.getRows().get(0).getElements().get(0).getDistance().getText();
-		return formatter.format(Double.parseDouble(distancia.split(" ")[0])) + " " + distancia.split(" ")[1];
+		DistanceDto distanceDto = googleDto.getRows().get(0).getElements().get(0).getDistance();
+		distanceDto.setText(formatter.format(Double.parseDouble(distanceDto.getText().split(" ")[0])) + " " 
+																+ distanceDto.getText().split(" ")[1]);
+		
+		return distanceDto;
 	}
 
 	@Override

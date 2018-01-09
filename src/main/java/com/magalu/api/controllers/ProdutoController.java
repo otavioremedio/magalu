@@ -1,7 +1,11 @@
 package com.magalu.api.controllers;
 
 import java.security.NoSuchAlgorithmException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Locale;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -22,11 +26,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.magalu.api.dtos.BuscaDto;
+import com.magalu.api.dtos.DistanceDto;
 import com.magalu.api.dtos.LojaDto;
 import com.magalu.api.dtos.ProdutoDto;
 import com.magalu.api.entities.Loja;
 import com.magalu.api.entities.Produto;
-import com.magalu.api.repositories.LojaRepository;
 import com.magalu.api.response.Response;
 import com.magalu.api.services.ProdutoService;
 
@@ -39,10 +43,6 @@ public class ProdutoController {
 
 	@Autowired
 	private ProdutoService produtoService;
-
-	@Autowired
-	private LojaRepository lojaRepository;
-
 
 	public ProdutoController() {
 	}
@@ -60,7 +60,7 @@ public class ProdutoController {
 		Response<BuscaDto> response = new Response<BuscaDto>();
 		BuscaDto busca = new BuscaDto();
 		Optional<Produto> produto;
-		String distancia;
+		DistanceDto distanceDto;
 
 		if(codigo.isPresent() && codigo.get().length() > 0){
 			produto = this.produtoService.buscaPorCodigo(codigo.get());
@@ -77,9 +77,9 @@ public class ProdutoController {
 
 		for (Loja loja : produto.get().getLojas()) {
 			try {
-				distancia = this.produtoService.buscaDistancia(origem, loja.getCep());
-				if(distancia != null){
-					busca.getLojas().add(this.converterLojaDto(loja, Optional.of(distancia)));
+				distanceDto = this.produtoService.buscaDistancia(origem, loja.getCep());
+				if(distanceDto != null){
+					busca.getLojas().add(this.converterLojaDto(loja, distanceDto.getText(), distanceDto.getValue()));
 				}
 			} catch (Exception e) {
 				response.getErrors().add("Ocorreu um erro ao tentar calcular a distância entre a loja e o cliente." +
@@ -87,7 +87,9 @@ public class ProdutoController {
 				return ResponseEntity.badRequest().body(response);
 			}
 		}
-
+				
+		busca.getLojas().sort(criaComparator());
+		
 		busca.setValor(produto.get().getValor().toString());
 		response.setData(busca);
 		return ResponseEntity.ok(response);
@@ -171,7 +173,7 @@ public class ProdutoController {
 		produtoDto.setLojas(new ArrayList<LojaDto>());
 
 		for (Loja loja : produto.getLojas()) {
-			produtoDto.getLojas().add(converterLojaDto(loja, null));
+			produtoDto.getLojas().add(converterLojaDto(loja, null, null));
 		}
 
 		return produtoDto;
@@ -183,13 +185,14 @@ public class ProdutoController {
 	 * @param loja, googleDto
 	 * @return LojaDto
 	 */
-	private LojaDto converterLojaDto(Loja loja, Optional<String> distancia) {
+	private LojaDto converterLojaDto(Loja loja, String distancia, String distanciaValor) {
 		LojaDto lojaDto = new LojaDto();
 		lojaDto.setId(loja.getId());
 		lojaDto.setCep(loja.getCep());
 		lojaDto.setCodigo(loja.getCodigo());
 		lojaDto.setDescricao(loja.getDescricao());
 		lojaDto.setDistancia(distancia);
+		lojaDto.setDistanciaValor(distanciaValor);
 		return lojaDto;
 	}
 
@@ -208,6 +211,14 @@ public class ProdutoController {
 		loja.setCodigo(lojaDto.getCodigo());
 		loja.setCep(lojaDto.getCep());
 		return loja;
+	}
+	
+	private Comparator<LojaDto> criaComparator() {
+		
+		NumberFormat format = NumberFormat.getInstance(Locale.US);
+			
+		Comparator<LojaDto> distanciaComparator = (b1,b2) -> Integer.compare(Integer.parseInt(b1.getDistanciaValor()), Integer.parseInt(b2.getDistanciaValor()));
+		return distanciaComparator;
 	}
 
 }

@@ -9,3 +9,9 @@ VALUES (NULL, '123456', 'Magazine Luz', '01102-000');
 
 INSERT INTO loja (loja_id, codigo, descricao, cep) 
 VALUES (NULL, '234567', 'Magazine Santana', '02405-006');
+
+INSERT INTO loja (loja_id, codigo, descricao, cep) 
+VALUES (NULL, '234', 'Magazine São Miguel', '08011-305');
+
+INSERT INTO loja (loja_id, codigo, descricao, cep) 
+VALUES (NULL, '567', 'Magazine Aricanduva', '03527-000');

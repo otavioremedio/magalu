@@ -28,6 +28,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.magalu.api.dtos.DistanceDto;
 import com.magalu.api.dtos.LojaDto;
 import com.magalu.api.dtos.ProdutoDto;
 import com.magalu.api.entities.Loja;
@@ -58,7 +59,6 @@ public class ProdutoControllerTest {
 	private static final String LOJA1_CODIGO = "987659";
 	private static final String LOJA2_CODIGO = "987654";
 	private static final String ORIGEM = "01102-000";
-	private static final String DISTANCIA = "2,1 km";
 	
 	@Before
 	public void setUp() throws Exception {
@@ -122,8 +122,11 @@ public class ProdutoControllerTest {
 	@WithMockUser
 	public void buscarProdutosCodigo() throws Exception {
 		Produto produto = obterDadosProduto();
+		DistanceDto distanceDto = new DistanceDto();
+		distanceDto.setText("2,1 km");
+		distanceDto.setValue("2100");
 		BDDMockito.given(this.produtoService.buscaPorCodigo(Mockito.anyString())).willReturn(Optional.of(produto));
-		BDDMockito.given(this.produtoService.buscaDistancia(Mockito.anyString(), Mockito.anyString())).willReturn(DISTANCIA);
+		BDDMockito.given(this.produtoService.buscaDistancia(Mockito.anyString(), Mockito.anyString())).willReturn(distanceDto);
 
 		mvc.perform(MockMvcRequestBuilders.get(APIPATH + "/busca")
 				.param("codigo", CODIGO)
@@ -134,8 +137,8 @@ public class ProdutoControllerTest {
 				.andExpect(jsonPath("$.data.valor").value(VALOR))
 				.andExpect(jsonPath("$.data.lojas[0].codigo").value(LOJA1_CODIGO))
 				.andExpect(jsonPath("$.data.lojas[1].codigo").value(LOJA2_CODIGO))
-				.andExpect(jsonPath("$.data.lojas[0].distancia").value(DISTANCIA))
-				.andExpect(jsonPath("$.data.lojas[1].distancia").value(DISTANCIA))
+				.andExpect(jsonPath("$.data.lojas[0].distancia").value(distanceDto.getText()))
+				.andExpect(jsonPath("$.data.lojas[1].distancia").value(distanceDto.getText()))
 				.andExpect(jsonPath("$.errors").isEmpty());
 	}
 	
@@ -143,9 +146,12 @@ public class ProdutoControllerTest {
 	@WithMockUser
 	public void buscarProdutosDescricao() throws Exception {
 		Produto produto = obterDadosProduto();
+		DistanceDto distanceDto = new DistanceDto();
+		distanceDto.setText("2,1 km");
+		distanceDto.setValue("2100");
 		BDDMockito.given(this.produtoService.buscaPorCodigo(Mockito.anyString())).willReturn(Optional.of(produto));
 		BDDMockito.given(this.produtoService.buscaPorDescricao(Mockito.anyString())).willReturn(Optional.of(produto));
-		BDDMockito.given(this.produtoService.buscaDistancia(Mockito.anyString(), Mockito.anyString())).willReturn(DISTANCIA);
+		BDDMockito.given(this.produtoService.buscaDistancia(Mockito.anyString(), Mockito.anyString())).willReturn(distanceDto);
 
 		mvc.perform(MockMvcRequestBuilders.get(APIPATH + "/busca")
 				.param("descricao", DESCRICAO)
@@ -156,8 +162,8 @@ public class ProdutoControllerTest {
 				.andExpect(jsonPath("$.data.valor").value(VALOR))
 				.andExpect(jsonPath("$.data.lojas[0].codigo").value(LOJA1_CODIGO))
 				.andExpect(jsonPath("$.data.lojas[1].codigo").value(LOJA2_CODIGO))
-				.andExpect(jsonPath("$.data.lojas[0].distancia").value(DISTANCIA))
-				.andExpect(jsonPath("$.data.lojas[1].distancia").value(DISTANCIA))
+				.andExpect(jsonPath("$.data.lojas[0].distancia").value(distanceDto.getText()))
+				.andExpect(jsonPath("$.data.lojas[1].distancia").value(distanceDto.getText()))
 				.andExpect(jsonPath("$.errors").isEmpty());
 	}
 	
