@@ -10,21 +10,21 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "produto")
 public class Produto {
 
-   
+
     private Long id;
     private String codigo;
     private String descricao;
     private BigDecimal valor;
     private List<Loja> lojas;
 
-   
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="produto_id")
@@ -35,7 +35,7 @@ public class Produto {
 	public void setId(Long id) {
 		this.id = id;
 	}
-    
+
 	@Column(name="codigo", nullable = false)
 	public String getCodigo() {
 		return codigo;
@@ -63,7 +63,7 @@ public class Produto {
 		this.valor = valor;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	public List<Loja> getLojas() {
 		return lojas;
 	}

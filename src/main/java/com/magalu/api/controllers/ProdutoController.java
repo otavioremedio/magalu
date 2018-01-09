@@ -26,6 +26,7 @@ import com.magalu.api.dtos.LojaDto;
 import com.magalu.api.dtos.ProdutoDto;
 import com.magalu.api.entities.Loja;
 import com.magalu.api.entities.Produto;
+import com.magalu.api.repositories.LojaRepository;
 import com.magalu.api.response.Response;
 import com.magalu.api.services.ProdutoService;
 
@@ -38,6 +39,10 @@ public class ProdutoController {
 
 	@Autowired
 	private ProdutoService produtoService;
+
+	@Autowired
+	private LojaRepository lojaRepository;
+
 
 	public ProdutoController() {
 	}
@@ -71,13 +76,14 @@ public class ProdutoController {
 		}
 
 		for (Loja loja : produto.get().getLojas()) {
-			distancia = this.produtoService.buscaDistancia(origem, loja.getCep());
-
-			if(distancia != null){
-				busca.getLojas().add(this.converterLojaDto(loja, Optional.of(distancia)));
-			} else {
+			try {
+				distancia = this.produtoService.buscaDistancia(origem, loja.getCep());
+				if(distancia != null){
+					busca.getLojas().add(this.converterLojaDto(loja, Optional.of(distancia)));
+				}
+			} catch (Exception e) {
 				response.getErrors().add("Ocorreu um erro ao tentar calcular a distância entre a loja e o cliente." +
-										 "Verifique se o endereço ou cep estão corretos. O cep deve possuir um traço.");
+						 "Verifique se o endereço ou cep estão corretos. O cep deve possuir um traço.");
 				return ResponseEntity.badRequest().body(response);
 			}
 		}
@@ -144,7 +150,7 @@ public class ProdutoController {
 		produto.setLojas(new ArrayList<Loja>());
 
 		for (LojaDto lojaDto : produtoDto.getLojas()) {
-			produto.getLojas().add(converterDtoLoja(lojaDto));
+			produto.getLojas().add(this.converterDtoLoja(lojaDto));
 		}
 
 		return produto;
