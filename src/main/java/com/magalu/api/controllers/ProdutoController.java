@@ -41,38 +41,38 @@ public class ProdutoController {
 
 	public ProdutoController() {
 	}
-	
+
 	/**
 	 * Retorna o produto buscado e as lojas que possuem.
-	 * 
+	 *
 	 * @return ResponseEntity<Response<ProdutoDto>>
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@GetMapping(value = "/busca")
-	public ResponseEntity<Response<BuscaDto>> buscarProduto(@RequestParam("codigo") Optional<String> codigo, 
+	public ResponseEntity<Response<BuscaDto>> buscarProduto(@RequestParam("codigo") Optional<String> codigo,
 			@RequestParam("descricao") Optional<String> descricao, @RequestParam("origem") String origem) throws Exception {
 		log.info("Buscando produto e lojas");
 		Response<BuscaDto> response = new Response<BuscaDto>();
 		BuscaDto busca = new BuscaDto();
 		Optional<Produto> produto;
 		String distancia;
-		
+
 		if(codigo.isPresent() && codigo.get().length() > 0){
 			produto = this.produtoService.buscaPorCodigo(codigo.get());
 		} else {
 			produto = this.produtoService.buscaPorDescricao(descricao.get());
 		}
-		
+
 
 		if (!produto.isPresent()) {
-			log.info("Produto não encontrado para o codigo: {}", codigo.get());
-			response.getErrors().add("Produto não encontrado para o codigo " + codigo.get());
+			log.info("Produto não encontrado para {}", codigo.isPresent()? ("o código " + codigo.get()) : ("a descrição " + descricao.get()));
+			response.getErrors().add("Produto não encontrado para " + (codigo.isPresent()? "o código " + codigo.get() : "a descrição " + descricao.get()));
 			return ResponseEntity.badRequest().body(response);
 		}
-		
+
 		for (Loja loja : produto.get().getLojas()) {
 			distancia = this.produtoService.buscaDistancia(origem, loja.getCep());
-			
+
 			try{
 				if(distancia != null){
 					busca.getLojas().add(this.converterLojaDto(loja, Optional.of(distancia)));
@@ -111,7 +111,7 @@ public class ProdutoController {
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
-		
+
 		response.setData(this.converterProdutoDto(this.produtoService.persistir(produto)));
 		return ResponseEntity.ok(response);
 	}
@@ -143,11 +143,11 @@ public class ProdutoController {
 		produto.setCodigo(produtoDto.getCodigo());
 		produto.setValor(produtoDto.getValor());
 		produto.setLojas(new ArrayList<Loja>());
-		
+
 		for (LojaDto lojaDto : produtoDto.getLojas()) {
 			produto.getLojas().add(converterDtoLoja(lojaDto));
 		}
-		
+
 		return produto;
 	}
 
@@ -164,14 +164,14 @@ public class ProdutoController {
 		produtoDto.setCodigo(produto.getCodigo());
 		produtoDto.setValor(produto.getValor());
 		produtoDto.setLojas(new ArrayList<LojaDto>());
-		
+
 		for (Loja loja : produto.getLojas()) {
 			produtoDto.getLojas().add(converterLojaDto(loja, null));
 		}
-		
+
 		return produtoDto;
 	}
-	
+
 	/**
 	 * Popula o DTO da loja para retornar na busca.
 	 *
@@ -187,7 +187,7 @@ public class ProdutoController {
 		lojaDto.setDistancia(distancia);
 		return lojaDto;
 	}
-	
+
 	/**
 	 * Converte os dados do DTO para loja.
 	 *
@@ -204,5 +204,5 @@ public class ProdutoController {
 		loja.setCep(lojaDto.getCep());
 		return loja;
 	}
-	
+
 }

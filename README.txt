@@ -11,4 +11,7 @@
 
 Produção
 - Acessar https://magalu-finder-otavio.herokuapp.com/index.html
+- Na tela de cadastrar Produto adicione os dados e selecione uma loja pre existente para relacionar ambos
+- Na pesquisa preencher a descrição ou código e a origem, o valor só é buscado se estiver igual ao cadastrado.
+
 
