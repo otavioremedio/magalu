@@ -35,6 +35,7 @@ public class ProdutoRepositoryTest {
 	@Before
 	public void setUp() throws Exception {
 		BDDMockito.given(this.lojaRepository.findByCodigo(Mockito.anyString())).willReturn(new Loja("Loja 1","123","01102-000"));
+		BDDMockito.given(this.lojaRepository.save(Mockito.any(Loja.class))).willReturn(new Loja("Loja 1","123","01102-000"));
 	}
 
 	@After
@@ -46,11 +47,13 @@ public class ProdutoRepositoryTest {
 	public void testBuscarPorCodigo() {
 
 		Produto p = new Produto();
+		Loja l =  new Loja();
 		p.setCodigo("123456");
 		p.setDescricao("Celular");
 		p.setValor(new BigDecimal(30.50));
 		p.setLojas(new ArrayList<Loja>());
-		p.getLojas().add(this.lojaRepository.findByCodigo("123"));
+		l = this.lojaRepository.findByCodigo("123");
+		this.lojaRepository.save(l);
 		this.produtoRepository.save(p);
 		p = this.produtoRepository.findByCodigo("123456");
 

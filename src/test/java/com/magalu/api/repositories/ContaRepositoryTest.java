@@ -28,7 +28,7 @@ import com.magalu.api.enums.PerfilEnum;
 @ActiveProfiles("test")
 public class ContaRepositoryTest {
 
-	private String email = "admin@magalu.com.br";
+	private static final String EMAIL = "administrador@magalu.com.br";
 
 	@Autowired
 	private ContaRepository contaRepository;
@@ -43,7 +43,7 @@ public class ContaRepositoryTest {
 	public void setUp() throws Exception {
 		Conta c = new Conta();
 		BCryptPasswordEncoder bCryptEncoder = new BCryptPasswordEncoder();
-		c.setEmail("admin@magalu.com.br");
+		c.setEmail(EMAIL);
 		c.setNome("Admin");
 		c.setPerfil(PerfilEnum.ROLE_ADMIN);
 		c.setSenha(bCryptEncoder.encode("123"));
@@ -57,14 +57,14 @@ public class ContaRepositoryTest {
 
 	@Test
 	public void findByEmail() {
-		Conta c = this.contaRepository.findByEmail("admin@magalu.com.br");
+		Conta c = this.contaRepository.findByEmail(EMAIL);
 
-		assertEquals(email, c.getEmail());
+		assertEquals(EMAIL, c.getEmail());
 	}
 
 	@Test
 	public void logarComContaValida() {
-		Conta c = this.contaRepository.findByEmail("admin@magalu.com.br");
+		Conta c = this.contaRepository.findByEmail(EMAIL);
 		Authentication a = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 				c.getEmail(), "123"));
 
@@ -73,7 +73,7 @@ public class ContaRepositoryTest {
 
 	@Test
 	public void logarComContaInvalida() {
-		Conta c = this.contaRepository.findByEmail("admin@magalu.com.br");
+		Conta c = this.contaRepository.findByEmail(EMAIL);
 		try{
 			Authentication a = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 					c.getEmail(), "12345"));
