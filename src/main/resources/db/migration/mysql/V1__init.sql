@@ -26,7 +26,7 @@ CREATE TABLE `produto` (
 CREATE TABLE `produto_lojas` (
   `produto_produto_id` bigint(20) NOT NULL,
   `lojas_loja_id` bigint(20) NOT NULL,
-  KEY `FKmdog3gny0voolhvbt2qah8sn0` (`lojas_loja_id`),
+  UNIQUE KEY `UK_ga3o6uuxfixp2w2p01wxbolae` (`lojas_loja_id`),
   KEY `FK8npgx9wq4w845fdjw4x3fo98w` (`produto_produto_id`),
   CONSTRAINT `FK8npgx9wq4w845fdjw4x3fo98w` FOREIGN KEY (`produto_produto_id`) REFERENCES `produto` (`produto_id`),
   CONSTRAINT `FKmdog3gny0voolhvbt2qah8sn0` FOREIGN KEY (`lojas_loja_id`) REFERENCES `loja` (`loja_id`)
