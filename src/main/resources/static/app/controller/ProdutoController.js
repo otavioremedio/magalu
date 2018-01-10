@@ -14,6 +14,8 @@
             function buscar(codigo){
         		LojaService.find(codigo).then(function(response) {
         			vm.produto.lojas.push(response.data.data);
+        			vm.codigoBusca = '';
+        			$('#codigoBusca').focus();
                 }, function(response) {
                 	
                 	var mensagem = '';
@@ -64,7 +66,7 @@
                 		})
                 	}
                     SweetAlert.swal({
-                        title: 'Erro ao criar produto',
+                        title: 'Erro ao buscar produto',
                         text: mensagem,
                         type: 'error'
                     });
