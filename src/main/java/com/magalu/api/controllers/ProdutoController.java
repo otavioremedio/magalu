@@ -70,8 +70,8 @@ public class ProdutoController {
 
 
 		if (!produto.isPresent()) {
-			log.info("Produto não encontrado para {}", codigo.isPresent()? ("o código " + codigo.get()) : ("a descrição " + descricao.get()));
-			response.getErrors().add("Produto não encontrado para " + (codigo.isPresent()? "o código " + codigo.get() : "a descrição " + descricao.get()));
+			log.info("Produto não encontrado para {}", codigo.isPresent() ? codigo.get().length() > 0 ? "o código " + codigo.get() : "a descrição " + descricao.get() : "a descrição " + descricao.get());
+			response.getErrors().add("Produto não encontrado para " + (codigo.isPresent() ? codigo.get().length() > 0 ? "o código " + codigo.get() : "a descrição " + descricao.get() : "a descrição " + descricao.get()));
 			return ResponseEntity.badRequest().body(response);
 		}
 
