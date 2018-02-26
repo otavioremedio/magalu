@@ -1,4 +1,7 @@
-﻿Desenvolvimento
+﻿
+Teste para a Magazine Luiza, implementar cadastro de lojas, produtos e buscar por localização.
+ 
+ Desenvolvimento
 
 - usar o maven install para compilar a aplicação
 - subir como Spring Boot App
